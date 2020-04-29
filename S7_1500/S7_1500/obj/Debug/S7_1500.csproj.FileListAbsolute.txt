@@ -1,0 +1,9 @@
+D:\化工智能工厂\S7_1500\S7_1500\bin\Debug\S7_1500.exe.config
+D:\化工智能工厂\S7_1500\S7_1500\bin\Debug\S7_1500.exe
+D:\化工智能工厂\S7_1500\S7_1500\bin\Debug\S7_1500.pdb
+D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.S7_1500_Form.resources
+D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.Properties.Resources.resources
+D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.csproj.GenerateResource.Cache
+D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.exe
+D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.pdb
+D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.csprojResolveAssemblyReference.cache
