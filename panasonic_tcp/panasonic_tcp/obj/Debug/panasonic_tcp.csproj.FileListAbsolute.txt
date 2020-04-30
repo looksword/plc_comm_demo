@@ -1,0 +1,9 @@
+E:\PLC\松下\panasonic_tcp\panasonic_tcp\bin\Debug\panasonic_tcp.exe.config
+E:\PLC\松下\panasonic_tcp\panasonic_tcp\bin\Debug\panasonic_tcp.exe
+E:\PLC\松下\panasonic_tcp\panasonic_tcp\bin\Debug\panasonic_tcp.pdb
+E:\PLC\松下\panasonic_tcp\panasonic_tcp\obj\Debug\panasonic_tcp.Form1.resources
+E:\PLC\松下\panasonic_tcp\panasonic_tcp\obj\Debug\panasonic_tcp.Properties.Resources.resources
+E:\PLC\松下\panasonic_tcp\panasonic_tcp\obj\Debug\panasonic_tcp.csproj.GenerateResource.cache
+E:\PLC\松下\panasonic_tcp\panasonic_tcp\obj\Debug\panasonic_tcp.exe
+E:\PLC\松下\panasonic_tcp\panasonic_tcp\obj\Debug\panasonic_tcp.pdb
+E:\PLC\松下\panasonic_tcp\panasonic_tcp\obj\Debug\panasonic_tcp.csprojResolveAssemblyReference.cache
