@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.28307.645
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "panasonic_tcp", "panasonic_tcp\panasonic_tcp.csproj", "{7F062044-DD4A-4353-A827-5F0933075850}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7F062044-DD4A-4353-A827-5F0933075850}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7F062044-DD4A-4353-A827-5F0933075850}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7F062044-DD4A-4353-A827-5F0933075850}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7F062044-DD4A-4353-A827-5F0933075850}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {0C376E89-9E0F-48B7-A747-534C56A218BB}
+	EndGlobalSection
+EndGlobal
