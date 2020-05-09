@@ -29,6 +29,8 @@
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.label7 = new System.Windows.Forms.Label();
+            this.bitValue = new System.Windows.Forms.ComboBox();
             this.write_value = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.return_value = new System.Windows.Forms.TextBox();
@@ -40,7 +42,7 @@
             this.address_ = new System.Windows.Forms.TextBox();
             this.label5 = new System.Windows.Forms.Label();
             this.read = new System.Windows.Forms.Button();
-            this.wirte = new System.Windows.Forms.Button();
+            this.write = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
@@ -53,6 +55,8 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.label7);
+            this.groupBox2.Controls.Add(this.bitValue);
             this.groupBox2.Controls.Add(this.write_value);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.return_value);
@@ -64,20 +68,42 @@
             this.groupBox2.Controls.Add(this.address_);
             this.groupBox2.Controls.Add(this.label5);
             this.groupBox2.Controls.Add(this.read);
-            this.groupBox2.Controls.Add(this.wirte);
+            this.groupBox2.Controls.Add(this.write);
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox2.Location = new System.Drawing.Point(51, 144);
+            this.groupBox2.Location = new System.Drawing.Point(18, 93);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(602, 275);
+            this.groupBox2.Size = new System.Drawing.Size(767, 431);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "操作";
             // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(398, 118);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(69, 25);
+            this.label7.TabIndex = 89;
+            this.label7.Text = "开关量";
+            // 
+            // bitValue
+            // 
+            this.bitValue.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.bitValue.Font = new System.Drawing.Font("Courier New", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.bitValue.FormattingEnabled = true;
+            this.bitValue.Items.AddRange(new object[] {
+            "False",
+            "True"});
+            this.bitValue.Location = new System.Drawing.Point(473, 124);
+            this.bitValue.Name = "bitValue";
+            this.bitValue.Size = new System.Drawing.Size(95, 22);
+            this.bitValue.TabIndex = 88;
+            // 
             // write_value
             // 
-            this.write_value.Location = new System.Drawing.Point(353, 126);
+            this.write_value.Location = new System.Drawing.Point(266, 115);
             this.write_value.Name = "write_value";
             this.write_value.Size = new System.Drawing.Size(126, 33);
             this.write_value.TabIndex = 17;
@@ -86,7 +112,7 @@
             // label6
             // 
             this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(287, 129);
+            this.label6.Location = new System.Drawing.Point(210, 118);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(50, 25);
             this.label6.TabIndex = 16;
@@ -94,16 +120,18 @@
             // 
             // return_value
             // 
-            this.return_value.Location = new System.Drawing.Point(96, 178);
+            this.return_value.Location = new System.Drawing.Point(77, 167);
+            this.return_value.Multiline = true;
             this.return_value.Name = "return_value";
-            this.return_value.Size = new System.Drawing.Size(466, 33);
+            this.return_value.ReadOnly = true;
+            this.return_value.Size = new System.Drawing.Size(684, 258);
             this.return_value.TabIndex = 15;
             this.return_value.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(30, 181);
+            this.label2.Location = new System.Drawing.Point(11, 170);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(50, 25);
             this.label2.TabIndex = 14;
@@ -111,7 +139,7 @@
             // 
             // address_reduce
             // 
-            this.address_reduce.Location = new System.Drawing.Point(96, 84);
+            this.address_reduce.Location = new System.Drawing.Point(77, 73);
             this.address_reduce.Name = "address_reduce";
             this.address_reduce.RightToLeft = System.Windows.Forms.RightToLeft.No;
             this.address_reduce.Size = new System.Drawing.Size(20, 32);
@@ -122,7 +150,7 @@
             // 
             // address_add
             // 
-            this.address_add.Location = new System.Drawing.Point(202, 82);
+            this.address_add.Location = new System.Drawing.Point(183, 71);
             this.address_add.Name = "address_add";
             this.address_add.Size = new System.Drawing.Size(20, 32);
             this.address_add.TabIndex = 7;
@@ -138,14 +166,14 @@
             "M",
             "X",
             "Y"});
-            this.address_type.Location = new System.Drawing.Point(96, 39);
+            this.address_type.Location = new System.Drawing.Point(77, 28);
             this.address_type.Name = "address_type";
             this.address_type.Size = new System.Drawing.Size(126, 33);
             this.address_type.TabIndex = 13;
             // 
             // count
             // 
-            this.count.Location = new System.Drawing.Point(96, 126);
+            this.count.Location = new System.Drawing.Point(77, 115);
             this.count.Name = "count";
             this.count.Size = new System.Drawing.Size(126, 33);
             this.count.TabIndex = 6;
@@ -153,7 +181,7 @@
             // 
             // address_
             // 
-            this.address_.Location = new System.Drawing.Point(122, 84);
+            this.address_.Location = new System.Drawing.Point(103, 73);
             this.address_.Name = "address_";
             this.address_.Size = new System.Drawing.Size(74, 33);
             this.address_.TabIndex = 12;
@@ -163,7 +191,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(30, 42);
+            this.label5.Location = new System.Drawing.Point(11, 31);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(50, 25);
             this.label5.TabIndex = 9;
@@ -172,7 +200,7 @@
             // read
             // 
             this.read.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.read.Location = new System.Drawing.Point(282, 39);
+            this.read.Location = new System.Drawing.Point(263, 28);
             this.read.Name = "read";
             this.read.Size = new System.Drawing.Size(89, 51);
             this.read.TabIndex = 8;
@@ -180,21 +208,21 @@
             this.read.UseVisualStyleBackColor = true;
             this.read.Click += new System.EventHandler(this.read_Click);
             // 
-            // wirte
+            // write
             // 
-            this.wirte.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.wirte.Location = new System.Drawing.Point(405, 39);
-            this.wirte.Name = "wirte";
-            this.wirte.Size = new System.Drawing.Size(89, 51);
-            this.wirte.TabIndex = 8;
-            this.wirte.Text = "写(&W)";
-            this.wirte.UseVisualStyleBackColor = true;
-            this.wirte.Click += new System.EventHandler(this.wirte_Click);
+            this.write.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.write.Location = new System.Drawing.Point(386, 28);
+            this.write.Name = "write";
+            this.write.Size = new System.Drawing.Size(89, 51);
+            this.write.TabIndex = 8;
+            this.write.Text = "写(&W)";
+            this.write.UseVisualStyleBackColor = true;
+            this.write.Click += new System.EventHandler(this.write_Click);
             // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(30, 129);
+            this.label4.Location = new System.Drawing.Point(11, 118);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(50, 25);
             this.label4.TabIndex = 2;
@@ -203,7 +231,7 @@
             // label3
             // 
             this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(30, 86);
+            this.label3.Location = new System.Drawing.Point(11, 75);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(50, 25);
             this.label3.TabIndex = 1;
@@ -215,7 +243,7 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.connectPLC);
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox1.Location = new System.Drawing.Point(51, 39);
+            this.groupBox1.Location = new System.Drawing.Point(18, 16);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(400, 72);
             this.groupBox1.TabIndex = 8;
@@ -254,7 +282,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(707, 458);
+            this.ClientSize = new System.Drawing.Size(797, 536);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
@@ -282,13 +310,15 @@
         private System.Windows.Forms.TextBox address_;
         private System.Windows.Forms.Label label5;
         private System.Windows.Forms.Button read;
-        private System.Windows.Forms.Button wirte;
+        private System.Windows.Forms.Button write;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.GroupBox groupBox1;
         public System.Windows.Forms.ComboBox comportName;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button connectPLC;
+        internal System.Windows.Forms.Label label7;
+        private System.Windows.Forms.ComboBox bitValue;
 
     }
 }

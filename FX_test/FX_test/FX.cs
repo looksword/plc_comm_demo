@@ -17,7 +17,7 @@ namespace FX_test
         }
 
         public System.IO.Ports.SerialPort serialPort1;
-        public byte[] Data;
+        public List<byte> Data;
         public bool writeOK;
 
         public bool connect(string com, Int16 BaudRate = 9600)
@@ -82,8 +82,37 @@ namespace FX_test
                     //MessageBox.Show( BitConverter.ToString(data).Replace("-", " "));
                     if (length > 2)
                     {
-                        Data = new byte[data.Length - 4];
-                        Array.Copy(data, 1, Data, 0, Data.Length);
+                        if(data[0]==0x02)
+                        {
+                            Data = new List<byte>();
+                            if(data[data.Length-3] == 0x03)
+                            {
+                                byte[] newdata = new byte[data.Length - 4];
+                                Array.Copy(data, 1, newdata, 0, newdata.Length);
+                                Data.AddRange(newdata);
+                            }
+                            else
+                            {
+                                byte[] newdata = new byte[data.Length - 1];
+                                Array.Copy(data, 1, newdata, 0, newdata.Length);
+                                Data.AddRange(newdata);
+                            }
+                        }
+                        else
+                        {
+                            if (data[data.Length - 3] == 0x03)
+                            {
+                                byte[] newdata = new byte[data.Length - 3];
+                                Array.Copy(data, 0, newdata, 0, newdata.Length);
+                                Data.AddRange(newdata);
+                            }
+                            else
+                            {
+                                byte[] newdata = new byte[data.Length];
+                                Array.Copy(data, 0, newdata, 0, newdata.Length);
+                                Data.AddRange(newdata);
+                            }
+                        }
                     }
                     if(length == 1)
                     {
@@ -129,7 +158,7 @@ namespace FX_test
             this.Data = null;
             byte[] data = new byte[11];
             data[0] = 0x02;
-            data[1] = 0x30;
+            data[1] = 0x30;//读出
             byte[] bs = null;
             byte byteCount;
             switch (tp)
@@ -147,7 +176,11 @@ namespace FX_test
                     data[3] = bs[1];
                     data[4] = bs[2];
                     data[5] = bs[3];
-                    bs = GetAsciiBytes((byte)(count * 2));
+                    bs = GetAsciiBytes((byte)(count * 4));//一个字四个字节
+                    if(count>63)
+                    {
+                        MessageBox.Show("The count is too large");
+                    }
                     data[6] = bs[0];
                     data[7] = bs[1];
                     break;
@@ -181,7 +214,7 @@ namespace FX_test
                     data[7] = bs[1];
                     break;
                 case Typ.Y:
-                    bs = GetAsciiBytes((ushort)((address / 16) * 2 + 0xA0));//Y区地址:0x00A0 - 0x00AF（X0 - X77）(逻辑地址八进制)
+                    bs = GetAsciiBytes((ushort)((address / 16) * 2 + 0xA0));//Y区地址:0x00A0 - 0x00AF（Y0 - Y77）(逻辑地址八进制)
                     data[2] = bs[0];
                     data[3] = bs[1];
                     data[4] = bs[2];
@@ -222,15 +255,16 @@ namespace FX_test
                 //MessageBox.Show(ex.Message);
                 throw new Exception(ex.Message);
             }
-            Thread.Sleep(200);
-            return this.Data;
+            int time = ((count / 6 + 1) / 2 + 1) * 100;
+            Thread.Sleep(time);//数量增加，时间增加 6 100 18 200 30 300 42 400 54 500
+            return this.Data.ToArray();
         }
 
         public bool write(Typ tp, int address, int value)
         {
             byte[] data = new byte[15];
             data[0] = 0x02;
-            data[1] = 0x30;
+            data[1] = 0x31;//写入
             byte[] bs = null;
             switch (tp)
             {
@@ -250,38 +284,12 @@ namespace FX_test
                     data[6] = 0x30;
                     data[7] = 0x32;//只写入一个字节
                     break;
-                case Typ.M:
-                    if (address >= 8000)
-                    {
-                        bs = GetAsciiBytes((ushort)(((address - 8000) / 16) * 2 + 0x01E0));//M区地址:0x01E0 - 0x01FF（M8000 - M8255）
-                    }
-                    else
-                    {
-                        bs = GetAsciiBytes((ushort)((address / 16) * 2 + 0x0100));//M区地址:0x0100 - 0x017F（M0 - M1023）、0x0300 - 0x037F（M0 - M1023）
-                    }
-                    data[2] = bs[0];
-                    data[3] = bs[1];
-                    data[4] = bs[2];
-                    data[5] = bs[3];
-                    data[6] = 0x30;
-                    data[7] = 0x32;//只写入一个字节
-                    break;
             }
 
-            if (value < 0xFF)
-            {
-                data[8] = Encoding.ASCII.GetBytes(value.ToString("X2"))[0];
-                data[9] = Encoding.ASCII.GetBytes(value.ToString("X2"))[1];
-                data[10] = 0x30;
-                data[11] = 0x30;
-            }
-            else
-            {
-                data[8] = Encoding.ASCII.GetBytes(value.ToString("X4"))[2];
-                data[9] = Encoding.ASCII.GetBytes(value.ToString("X4"))[3];
-                data[10] = Encoding.ASCII.GetBytes(value.ToString("X4"))[0];
-                data[11] = Encoding.ASCII.GetBytes(value.ToString("X4"))[1];
-            }
+            data[8] = Encoding.ASCII.GetBytes(value.ToString("X4"))[2];//2
+            data[9] = Encoding.ASCII.GetBytes(value.ToString("X4"))[3];//3
+            data[10] = Encoding.ASCII.GetBytes(value.ToString("X4"))[0];//0
+            data[11] = Encoding.ASCII.GetBytes(value.ToString("X4"))[1];//1
 
             data[12] = 0x03;
             ushort sum = 0;
@@ -290,9 +298,82 @@ namespace FX_test
                 sum += data[i];
             }
             string sumStr = sum.ToString("X2");
-
             data[13] = (byte)sumStr[sumStr.Length - 2];
             data[14] = (byte)sumStr[sumStr.Length - 1];
+
+            try
+            {
+
+                if (this.serialPort1.IsOpen)
+                {
+                    Thread.Sleep(10);
+                    serialPort1.Write(data, 0, data.Length);
+                    //throw new Exception(BitConverter.ToString(data).Replace("-"," "));
+                    //MessageBox.Show(BitConverter.ToString(data).Replace("-", " "));
+                }
+                else
+                {
+                    //MessageBox.Show("端口尚未打开");
+                }
+            }
+            catch (Exception ex)
+            {
+                //MessageBox.Show(ex.Message);
+                throw new Exception(ex.Message);
+            }
+            Thread.Sleep(200);
+            return this.writeOK;
+        }
+
+        public bool writeBool(Typ tp, int address, bool value)
+        {
+            byte[] data = new byte[9];
+            data[0] = 0x02;
+            if(value)
+            {
+                data[1] = 0x37;//强制ON
+            }
+            else
+            {
+                data[1] = 0x38;//强制ON
+            }
+            byte[] bs = null;
+            switch (tp)
+            {
+                case Typ.M:
+                    if (address >= 8000)
+                    {
+                        bs = GetAsciiBytes((ushort)(((address - 8000)) + 0x0F00));//M区地址:0x0F00 - 0x0FFF（M8000 - M8255）
+                    }
+                    else
+                    {
+                        bs = GetAsciiBytes((ushort)(address + 0x0800));//M区地址:0x0800 - 0x0BFF（M0 - M1023）
+                    }
+                    //if (address >= 8000)
+                    //{
+                    //    bs = GetAsciiBytes((ushort)(((address - 8000) / 16) * 2 + 0x01E0));//M区地址:0x01E0 - 0x01FF（M8000 - M8255）
+                    //}
+                    //else
+                    //{
+                    //    bs = GetAsciiBytes((ushort)((address / 16) * 2 + 0x0100));//M区地址:0x0100 - 0x017F（M0 - M1023）、0x0300 - 0x037F（M0 - M1023）
+                    //}
+                    data[2] = bs[2];//2
+                    data[3] = bs[3];//3
+                    data[4] = bs[0];//0
+                    data[5] = bs[1];//1
+                    break;
+            }
+
+            data[6] = 0x03;
+            ushort sum = 0;
+            for (int i = 1; i < 7; i++)
+            {
+                sum += data[i];
+            }
+            string sumStr = sum.ToString("X2");
+            data[7] = (byte)sumStr[sumStr.Length - 2];
+            data[8] = (byte)sumStr[sumStr.Length - 1];
+
             try
             {
 
