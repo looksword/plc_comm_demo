@@ -1,0 +1,8 @@
+E:\PLC\西门子\BCNet-S7200 & BCNet-S7300（西门子）\BCNetS7200\BCNetS7200\bin\Debug\BCNetS7200.exe.config
+E:\PLC\西门子\BCNet-S7200 & BCNet-S7300（西门子）\BCNetS7200\BCNetS7200\obj\Debug\BCNetS7200.Properties.Resources.resources
+E:\PLC\西门子\BCNet-S7200 & BCNet-S7300（西门子）\BCNetS7200\BCNetS7200\obj\Debug\BCNetS7200.csproj.GenerateResource.Cache
+E:\PLC\西门子\BCNet-S7200 & BCNet-S7300（西门子）\BCNetS7200\BCNetS7200\bin\Debug\BCNetS7200.exe
+E:\PLC\西门子\BCNet-S7200 & BCNet-S7300（西门子）\BCNetS7200\BCNetS7200\bin\Debug\BCNetS7200.pdb
+E:\PLC\西门子\BCNet-S7200 & BCNet-S7300（西门子）\BCNetS7200\BCNetS7200\obj\Debug\BCNetS7200.Form1.resources
+E:\PLC\西门子\BCNet-S7200 & BCNet-S7300（西门子）\BCNetS7200\BCNetS7200\obj\Debug\BCNetS7200.exe
+E:\PLC\西门子\BCNet-S7200 & BCNet-S7300（西门子）\BCNetS7200\BCNetS7200\obj\Debug\BCNetS7200.pdb
