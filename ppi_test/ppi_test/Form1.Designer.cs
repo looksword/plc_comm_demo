@@ -29,6 +29,10 @@
         private void InitializeComponent()
         {
             this.groupBox2 = new System.Windows.Forms.GroupBox();
+            this.recv_msg = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.send_msg = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.write_value = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.return_value = new System.Windows.Forms.TextBox();
@@ -44,17 +48,22 @@
             this.label4 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.baudRate = new System.Windows.Forms.ComboBox();
+            this.label7 = new System.Windows.Forms.Label();
             this.comportName = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.connectPLC = new System.Windows.Forms.Button();
-            this.baudRate = new System.Windows.Forms.ComboBox();
-            this.label7 = new System.Windows.Forms.Label();
+            this.Time = new System.Windows.Forms.TextBox();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.recv_msg);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.send_msg);
+            this.groupBox2.Controls.Add(this.label8);
             this.groupBox2.Controls.Add(this.write_value);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.return_value);
@@ -70,12 +79,46 @@
             this.groupBox2.Controls.Add(this.label4);
             this.groupBox2.Controls.Add(this.label3);
             this.groupBox2.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox2.Location = new System.Drawing.Point(85, 140);
+            this.groupBox2.Location = new System.Drawing.Point(12, 113);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(602, 275);
+            this.groupBox2.Size = new System.Drawing.Size(1457, 410);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "操作";
+            // 
+            // recv_msg
+            // 
+            this.recv_msg.Location = new System.Drawing.Point(96, 371);
+            this.recv_msg.Name = "recv_msg";
+            this.recv_msg.Size = new System.Drawing.Size(1342, 33);
+            this.recv_msg.TabIndex = 21;
+            this.recv_msg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(30, 374);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(50, 25);
+            this.label9.TabIndex = 20;
+            this.label9.Text = "接收";
+            // 
+            // send_msg
+            // 
+            this.send_msg.Location = new System.Drawing.Point(96, 332);
+            this.send_msg.Name = "send_msg";
+            this.send_msg.Size = new System.Drawing.Size(1342, 33);
+            this.send_msg.TabIndex = 19;
+            this.send_msg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(30, 335);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(50, 25);
+            this.label8.TabIndex = 18;
+            this.label8.Text = "发送";
             // 
             // write_value
             // 
@@ -97,8 +140,10 @@
             // return_value
             // 
             this.return_value.Location = new System.Drawing.Point(96, 178);
+            this.return_value.Multiline = true;
             this.return_value.Name = "return_value";
-            this.return_value.Size = new System.Drawing.Size(466, 33);
+            this.return_value.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+            this.return_value.Size = new System.Drawing.Size(1342, 148);
             this.return_value.TabIndex = 15;
             this.return_value.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
@@ -107,9 +152,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(30, 181);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(50, 25);
+            this.label2.Size = new System.Drawing.Size(31, 25);
             this.label2.TabIndex = 14;
-            this.label2.Text = "返回";
+            this.label2.Text = "值";
             // 
             // address_reduce
             // 
@@ -226,12 +271,34 @@
             this.groupBox1.Controls.Add(this.label1);
             this.groupBox1.Controls.Add(this.connectPLC);
             this.groupBox1.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.groupBox1.Location = new System.Drawing.Point(85, 35);
+            this.groupBox1.Location = new System.Drawing.Point(12, 35);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(579, 72);
+            this.groupBox1.Size = new System.Drawing.Size(652, 72);
             this.groupBox1.TabIndex = 6;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "PLC通信";
+            // 
+            // baudRate
+            // 
+            this.baudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.baudRate.FormattingEnabled = true;
+            this.baudRate.Items.AddRange(new object[] {
+            "9600",
+            "19200"});
+            this.baudRate.Location = new System.Drawing.Point(319, 28);
+            this.baudRate.Name = "baudRate";
+            this.baudRate.Size = new System.Drawing.Size(90, 29);
+            this.baudRate.TabIndex = 5;
+            // 
+            // label7
+            // 
+            this.label7.AutoSize = true;
+            this.label7.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label7.Location = new System.Drawing.Point(236, 26);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(88, 25);
+            this.label7.TabIndex = 4;
+            this.label7.Text = "波特率：";
             // 
             // comportName
             // 
@@ -262,33 +329,20 @@
             this.connectPLC.UseVisualStyleBackColor = true;
             this.connectPLC.Click += new System.EventHandler(this.connectPLC_Click);
             // 
-            // baudRate
+            // Time
             // 
-            this.baudRate.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.baudRate.FormattingEnabled = true;
-            this.baudRate.Items.AddRange(new object[] {
-            "9600",
-            "19200"});
-            this.baudRate.Location = new System.Drawing.Point(319, 28);
-            this.baudRate.Name = "baudRate";
-            this.baudRate.Size = new System.Drawing.Size(90, 29);
-            this.baudRate.TabIndex = 5;
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label7.Location = new System.Drawing.Point(236, 26);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(88, 25);
-            this.label7.TabIndex = 4;
-            this.label7.Text = "波特率：";
+            this.Time.Location = new System.Drawing.Point(955, 71);
+            this.Time.Name = "Time";
+            this.Time.Size = new System.Drawing.Size(126, 21);
+            this.Time.TabIndex = 8;
+            this.Time.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(786, 427);
+            this.ClientSize = new System.Drawing.Size(1481, 535);
+            this.Controls.Add(this.Time);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
@@ -299,6 +353,7 @@
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -325,6 +380,11 @@
         private System.Windows.Forms.Label label6;
         public System.Windows.Forms.ComboBox baudRate;
         private System.Windows.Forms.Label label7;
+        private System.Windows.Forms.TextBox recv_msg;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox send_msg;
+        private System.Windows.Forms.Label label8;
+        private System.Windows.Forms.TextBox Time;
     }
 }
 

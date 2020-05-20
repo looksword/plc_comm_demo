@@ -16,6 +16,8 @@ namespace ppi_test
         {
             InitializeComponent();
             this.PPI_com = new PPI();
+            this.read.Enabled = false;
+            //this.wirte.Enabled = false;
         }
 
         private int address;
@@ -27,12 +29,12 @@ namespace ppi_test
             if (PPI_com.serialPort1.IsOpen)
             {
                 if (PPI_com.Disconnect())
-                { this.connectPLC.Text = "连接"; }
+                { this.connectPLC.Text = "连接"; this.read.Enabled = false; }
             }
             else
             {
                 if (PPI_com.connect(this.comportName.Text,short.Parse(this.baudRate.Text)))
-                { this.connectPLC.Text = "断开"; }
+                { this.connectPLC.Text = "断开"; this.read.Enabled = true; }
             }
         }
 
@@ -119,6 +121,9 @@ namespace ppi_test
                             return_value.Text = BitConverter.ToString(data).Replace("-", " ");
                             break;
                     }
+                    Time.Text = PPI_com.time.ToString() + " ms";
+                    send_msg.Text = PPI_com.send_string;
+                    recv_msg.Text = PPI_com.recv_string;
                 }
             }
             catch (Exception ex)
@@ -165,6 +170,9 @@ namespace ppi_test
                     default:
                         break;
                 }
+                Time.Text = PPI_com.time.ToString() + " ms";
+                send_msg.Text = PPI_com.send_string;
+                recv_msg.Text = PPI_com.recv_string;
             }
             catch (Exception ex)
             {
