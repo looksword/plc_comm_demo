@@ -81,7 +81,9 @@ namespace Modbus_test
                 int station = Int32.Parse(station_rtu.Text);
             }
             catch (Exception ex)
-            { MessageBox.Show(ex.Message); }
+            { 
+                txt_rtu.Text = "Station Error : " + ex.Message; 
+            }
         }
 
         private void read_rtu_Click(object sender, EventArgs e)
@@ -138,34 +140,99 @@ namespace Modbus_test
 
         private void connectPLC_ASCII_Click(object sender, EventArgs e)
         {
-            if(modbusascii == null)
+            try
             {
-                modbusascii = new ModbusASCII();
-            }
-            System.IO.Ports.StopBits stopbits = System.IO.Ports.StopBits.One;
-            System.IO.Ports.Parity parity = System.IO.Ports.Parity.Even;
-            if (modbusascii.serialPort1.IsOpen)
-            {
-                if (modbusascii.Disconnect())
-                { this.connectPLC_ASCII.Text = "连接"; }
-            }
-            else
-            {
-                switch (Parity_ascii.Text)
+                if (modbusascii == null)
                 {
-                    case "Even":
-                        parity = System.IO.Ports.Parity.Even;
-                        break;
-                    case "None":
-                        parity = System.IO.Ports.Parity.None;
-                        stopbits = System.IO.Ports.StopBits.Two;
-                        break;
-                    case "Odd":
-                        parity = System.IO.Ports.Parity.Odd;
-                        break;
+                    modbusascii = new ModbusASCII();
                 }
-                if (modbusascii.connect(this.comportName_ascii.Text, int.Parse(this.baudRate_ascii.Text), 7, stopbits, parity))
-                { this.connectPLC_ASCII.Text = "断开"; }
+                System.IO.Ports.StopBits stopbits = System.IO.Ports.StopBits.One;
+                System.IO.Ports.Parity parity = System.IO.Ports.Parity.Even;
+                if (modbusascii.serialPort1.IsOpen)
+                {
+                    if (modbusascii.Disconnect())
+                    { this.connectPLC_ASCII.Text = "连接"; }
+                }
+                else
+                {
+                    switch (Parity_ascii.Text)
+                    {
+                        case "Even":
+                            parity = System.IO.Ports.Parity.Even;
+                            break;
+                        case "None":
+                            parity = System.IO.Ports.Parity.None;
+                            stopbits = System.IO.Ports.StopBits.Two;
+                            break;
+                        case "Odd":
+                            parity = System.IO.Ports.Parity.Odd;
+                            break;
+                    }
+                    if (modbusascii.connect(this.comportName_ascii.Text, int.Parse(this.baudRate_ascii.Text), 7, stopbits, parity))
+                    { this.connectPLC_ASCII.Text = "断开"; }
+                }
+            }
+            catch(Exception ex)
+            {
+                txt_rtu.Text = "Connect Error : " + ex.Message;
+            }
+        }
+
+        private void station_ascii_TextChanged(object sender, EventArgs e)
+        {
+            try
+            {
+                int station = Int32.Parse(station_ascii.Text);
+            }
+            catch (Exception ex)
+            {
+                txt_rtu.Text = "Station Error : " + ex.Message;
+            }
+        }
+
+        private void read_ascii_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                ModbusASCII.Area area = ModbusASCII.Area.Coil;
+                switch(area_ascii.Text)
+                {
+                    case "coil":
+                        area = ModbusASCII.Area.Coil;
+                        break;
+                    case "input":
+                        area = ModbusASCII.Area.Input;
+                        break;
+                    case "Register":
+                        area = ModbusASCII.Area.Register;
+                        break;
+                    case "InputRegister":
+                        area = ModbusASCII.Area.InputRegister;
+                        break;
+                    default:
+                        throw new Exception("未选择区域");
+                }
+                modbusascii.Station = byte.Parse(station_ascii.Text);
+                byte[] data = modbusascii.Read(area, ushort.Parse(address_ascii.Text), int.Parse(length_ascii.Text));
+                send_ascii.Text = BitConverter.ToString(modbusascii.sendmessage).Replace("-", " ");
+                recv_ascii.Text = BitConverter.ToString(modbusascii.recvmessage).Replace("-", " ");
+                data_ascii.Text = BitConverter.ToString(data).Replace("-", " ");
+            }
+            catch(Exception ex)
+            {
+                txt_ascii.Text = "Read Error : " + ex.Message;
+            }
+        }
+
+        private void write_ascii_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                txt_rtu.Text = "Write Error : " + ex.Message;
             }
         }
 
@@ -179,7 +246,6 @@ namespace Modbus_test
         }
 
         #endregion
-
 
     }
 }

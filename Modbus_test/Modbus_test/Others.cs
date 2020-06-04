@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -59,5 +60,69 @@ namespace Modbus_test
         	0X4400, 0X84C1, 0X8581, 0X4540, 0X8701, 0X47C0, 0X4680, 0X8641,
         	0X8201, 0X42C0, 0X4380, 0X8341, 0X4100, 0X81C1, 0X8081, 0X4040 
         };
+
+        public static byte[] BytesToAsciiBytes(byte[] inBytes)
+        {
+            return Encoding.ASCII.GetBytes(ByteToHexString(inBytes));
+        }
+
+        public static string ByteToHexString(byte[] InBytes)
+        {
+            StringBuilder sb = new StringBuilder();
+            foreach (byte InByte in InBytes)
+            {
+                sb.Append(string.Format("{0:X2}", InByte));
+            }
+            return sb.ToString();
+        }
+
+        public static byte[] AsciiBytesToBytes(byte[] inBytes)
+        {
+            return HexStringToBytes(Encoding.ASCII.GetString(inBytes));
+        }
+
+        public static byte[] HexStringToBytes(string hex)
+        {
+            hex = hex.ToUpper();
+
+            MemoryStream ms = new MemoryStream();
+
+            for (int i = 0; i < hex.Length; i++)
+            {
+                if ((i + 1) < hex.Length)
+                {
+                    if (hexCharList.Contains(hex[i]) && hexCharList.Contains(hex[i + 1]))
+                    {
+                        // 这是一个合格的字节数据
+                        ms.WriteByte((byte)(hexCharList.IndexOf(hex[i]) * 16 + hexCharList.IndexOf(hex[i + 1])));
+                        i++;
+                    }
+                }
+            }
+            byte[] result = ms.ToArray();
+            ms.Dispose();
+            return result;
+        }
+
+        private static List<char> hexCharList = new List<char>() { '0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F' };
+
+        public static byte CalculateLrc(byte[] value)
+        {
+            if (value == null)
+            {
+                throw new Exception("计算LRC错误 : 数组为空");
+            }
+
+            int sum = 0;
+            for (int i = 0; i < value.Length; i++)
+            {
+                sum += value[i];
+            }
+
+            sum = sum % 256;
+            sum = 256 - sum;
+
+            return (byte)sum;
+        }
     }
 }

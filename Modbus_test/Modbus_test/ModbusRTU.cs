@@ -90,7 +90,7 @@ namespace Modbus_test
                 byte[] CRC_send = Others.CalculateCrc(send.ToArray());
                 send.AddRange(CRC_send);
                 sendmessage = send.ToArray();
-                //接收数据
+                //通讯
                 byte[] receive = ReadBase(send.ToArray());
                 recvmessage = receive;
                 if (receive[0] != Station)
@@ -140,7 +140,7 @@ namespace Modbus_test
             }
             byte[] result = null;//返回结果
             try
-            {//读取
+            {//接收
                 byte[] frameStart = ReadBase(4);//报头
                 byte[] frameEnd = ReadBase(frameStart[2] + 1);//剩余报文
                 List<byte> frame = new List<byte>();
