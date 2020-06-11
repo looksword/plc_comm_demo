@@ -17,7 +17,7 @@ namespace Modbus_test
         public byte[] sendmessage = null;
         public byte[] recvmessage = null;
 
-        public bool connect(string com, int BaudRate = 9600, int DataBits = 8, System.IO.Ports.StopBits StopBits = System.IO.Ports.StopBits.One, System.IO.Ports.Parity Parity = System.IO.Ports.Parity.Even)
+        public bool Connect(string com, int BaudRate = 9600, int DataBits = 8, System.IO.Ports.StopBits StopBits = System.IO.Ports.StopBits.One, System.IO.Ports.Parity Parity = System.IO.Ports.Parity.Even)
         {
             try
             {
@@ -34,6 +34,8 @@ namespace Modbus_test
                 if (serialPort1.IsOpen)
                 {
                     //   MessageBox.Show("打开" + com + "端口成功");
+                    serialPort1.ReadTimeout = 1000;
+                    serialPort1.WriteTimeout = 1000;
                     return true;
                 }
             }
@@ -105,10 +107,10 @@ namespace Modbus_test
                     throw new Exception("接收校验错误");
                 }
                 int datalen = receive[2];
-                if(datalen!=length)
-                {
-                    throw new Exception("接收数据长度错误");
-                }
+                //if(datalen!=length)
+                //{
+                //    throw new Exception("接收数据长度错误");//线圈8位寄存器一字
+                //}
                 Data = new byte[datalen];
                 Array.Copy(receive, 3, Data, 0, datalen);
                 return Data;
@@ -212,6 +214,7 @@ namespace Modbus_test
                 {
                     throw new Exception("接收校验错误");
                 }
+                success = true;
             }
             catch(Exception ex)
             {
@@ -235,8 +238,10 @@ namespace Modbus_test
                 send.Add(BitConverter.GetBytes(value)[0]);
                 byte[] CRC_send = Others.CalculateCrc(send.ToArray());
                 send.AddRange(CRC_send);
+                sendmessage = send.ToArray();
                 //接收
                 byte[] receive = WriteBase(send.ToArray());
+                recvmessage = receive;
                 if (receive[0] != Station)
                 {
                     throw new Exception("接收的站号不一致");
@@ -248,6 +253,7 @@ namespace Modbus_test
                 {
                     throw new Exception("接收校验错误");
                 }
+                success = true;
             }
             catch (Exception ex)
             {

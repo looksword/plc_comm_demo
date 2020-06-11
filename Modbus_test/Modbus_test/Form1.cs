@@ -47,7 +47,9 @@ namespace Modbus_test
                 if (modbusrtu.serialPort1.IsOpen)
                 {
                     if (modbusrtu.Disconnect())
-                    { this.connectPLC_RTU.Text = "连接"; }
+                    { 
+                        this.connectPLC_RTU.Text = "连接"; 
+                    }
                 }
                 else
                 {
@@ -64,8 +66,10 @@ namespace Modbus_test
                             parity = System.IO.Ports.Parity.Odd;
                             break;
                     }
-                    if (modbusrtu.connect(this.comportName_rtu.Text, int.Parse(this.baudRate_rtu.Text), 8, stopbits, parity))
-                    { this.connectPLC_RTU.Text = "断开"; }
+                    if (modbusrtu.Connect(this.comportName_rtu.Text, int.Parse(this.baudRate_rtu.Text), 8, stopbits, parity))
+                    { 
+                        this.connectPLC_RTU.Text = "断开"; 
+                    }
                 }
             }
             catch(Exception ex)
@@ -90,6 +94,7 @@ namespace Modbus_test
         {
             try
             {
+                int time = Environment.TickCount;
                 ModbusRTU.Area area = ModbusRTU.Area.Coil;
                 switch (area_rtu.Text)
                 {
@@ -113,6 +118,7 @@ namespace Modbus_test
                 send_rtu.Text = BitConverter.ToString(modbusrtu.sendmessage).Replace("-", " ");
                 recv_rtu.Text = BitConverter.ToString(modbusrtu.recvmessage).Replace("-", " ");
                 data_rtu.Text = BitConverter.ToString(data).Replace("-", " ");
+                txt_rtu.Text = "Read Time : " + (Environment.TickCount - time).ToString() + " ms";
             }
             catch(Exception ex)
             {
@@ -124,7 +130,23 @@ namespace Modbus_test
         {
             try
             {
-
+                int time = Environment.TickCount;
+                ushort value = ushort.Parse(value_rtu.Text);
+                modbusrtu.Station = byte.Parse(station_rtu.Text);
+                switch (area_rtu.Text)
+                {
+                    case "coil":
+                        data_rtu.Text = modbusrtu.WriteCoil(ushort.Parse(address_rtu.Text), value == 0 ? false : true).ToString();
+                        break;
+                    case "Register":
+                        data_rtu.Text = modbusrtu.WriteRegister(ushort.Parse(address_rtu.Text), value).ToString();
+                        break;
+                    default:
+                        throw new Exception("未选择区域或区域选择不正确");
+                }
+                send_rtu.Text = BitConverter.ToString(modbusrtu.sendmessage).Replace("-", " ");
+                recv_rtu.Text = BitConverter.ToString(modbusrtu.recvmessage).Replace("-", " ");
+                txt_rtu.Text = "Write Time : " + (Environment.TickCount - time).ToString() + " ms";
             }
             catch(Exception ex)
             {
@@ -151,7 +173,9 @@ namespace Modbus_test
                 if (modbusascii.serialPort1.IsOpen)
                 {
                     if (modbusascii.Disconnect())
-                    { this.connectPLC_ASCII.Text = "连接"; }
+                    { 
+                        this.connectPLC_ASCII.Text = "连接"; 
+                    }
                 }
                 else
                 {
@@ -168,8 +192,10 @@ namespace Modbus_test
                             parity = System.IO.Ports.Parity.Odd;
                             break;
                     }
-                    if (modbusascii.connect(this.comportName_ascii.Text, int.Parse(this.baudRate_ascii.Text), 7, stopbits, parity))
-                    { this.connectPLC_ASCII.Text = "断开"; }
+                    if (modbusascii.Connect(this.comportName_ascii.Text, int.Parse(this.baudRate_ascii.Text), 7, stopbits, parity))
+                    { 
+                        this.connectPLC_ASCII.Text = "断开"; 
+                    }
                 }
             }
             catch(Exception ex)
@@ -194,6 +220,7 @@ namespace Modbus_test
         {
             try
             {
+                int time = Environment.TickCount;
                 ModbusASCII.Area area = ModbusASCII.Area.Coil;
                 switch(area_ascii.Text)
                 {
@@ -217,6 +244,7 @@ namespace Modbus_test
                 send_ascii.Text = BitConverter.ToString(modbusascii.sendmessage).Replace("-", " ");
                 recv_ascii.Text = BitConverter.ToString(modbusascii.recvmessage).Replace("-", " ");
                 data_ascii.Text = BitConverter.ToString(data).Replace("-", " ");
+                txt_rtu.Text = "Read Time : " + (Environment.TickCount - time).ToString() + " ms";
             }
             catch(Exception ex)
             {
@@ -240,9 +268,83 @@ namespace Modbus_test
 
         #region Modbus Tcp
 
+        private ModbusTCP modbustcp = null;
+
         private void connectPLC_net_Click(object sender, EventArgs e)
         {
+            try
+            {
+                if (modbustcp == null)
+                {
+                    modbustcp = new ModbusTCP();
+                }
+                if(modbustcp.connected)
+                {
+                    if (modbustcp.Disconnect())
+                    { 
+                        this.connectPLC_TCP.Text = "连接"; 
+                    }
+                }
+                else
+                {
+                    if(modbustcp.Connect(TxtIP.Text,int.Parse(TxtPort.Text)))
+                    {
+                        this.connectPLC_TCP.Text = "断开";
+                    }
+                }
+            }
+            catch(Exception ex)
+            {
+                txt_tcp.Text = "Connect Error : " + ex.Message;
+            }
+        }
 
+        private void read_tcp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int time = Environment.TickCount;
+                ModbusTCP.Area area = ModbusTCP.Area.Coil;
+                switch (area_tcp.Text)
+                {
+                    case "coil":
+                        area = ModbusTCP.Area.Coil;
+                        break;
+                    case "input":
+                        area = ModbusTCP.Area.Input;
+                        break;
+                    case "Register":
+                        area = ModbusTCP.Area.Register;
+                        break;
+                    case "InputRegister":
+                        area = ModbusTCP.Area.InputRegister;
+                        break;
+                    default:
+                        throw new Exception("未选择区域");
+                }
+                modbustcp.Station = byte.Parse(station_tcp.Text);
+                byte[] data = modbustcp.Read(area, ushort.Parse(address_tcp.Text), int.Parse(length_tcp.Text));
+                send_tcp.Text = BitConverter.ToString(modbustcp.sendmessage).Replace("-", " ");
+                recv_tcp.Text = BitConverter.ToString(modbustcp.recvmessage).Replace("-", " ");
+                data_tcp.Text = BitConverter.ToString(data).Replace("-", " ");
+                txt_tcp.Text = "Read Time : " + (Environment.TickCount - time).ToString() + " ms";
+            }
+            catch (Exception ex)
+            {
+                txt_tcp.Text = "Read Error : " + ex.Message;
+            }
+        }
+
+        private void write_tcp_Click(object sender, EventArgs e)
+        {
+            try
+            {
+
+            }
+            catch (Exception ex)
+            {
+                txt_tcp.Text = "Write Error : " + ex.Message;
+            }
         }
 
         #endregion
