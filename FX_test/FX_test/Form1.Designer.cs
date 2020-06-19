@@ -49,12 +49,22 @@
             this.comportName = new System.Windows.Forms.ComboBox();
             this.label1 = new System.Windows.Forms.Label();
             this.connectPLC = new System.Windows.Forms.Button();
+            this.Time = new System.Windows.Forms.TextBox();
+            this.recv_msg = new System.Windows.Forms.TextBox();
+            this.label9 = new System.Windows.Forms.Label();
+            this.send_msg = new System.Windows.Forms.TextBox();
+            this.label8 = new System.Windows.Forms.Label();
             this.groupBox2.SuspendLayout();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.recv_msg);
+            this.groupBox2.Controls.Add(this.label9);
+            this.groupBox2.Controls.Add(this.send_msg);
+            this.groupBox2.Controls.Add(this.label8);
+            this.groupBox2.Controls.Add(this.Time);
             this.groupBox2.Controls.Add(this.label7);
             this.groupBox2.Controls.Add(this.bitValue);
             this.groupBox2.Controls.Add(this.write_value);
@@ -74,7 +84,7 @@
             this.groupBox2.Font = new System.Drawing.Font("微软雅黑", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox2.Location = new System.Drawing.Point(18, 93);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(767, 431);
+            this.groupBox2.Size = new System.Drawing.Size(767, 512);
             this.groupBox2.TabIndex = 9;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "操作";
@@ -278,11 +288,56 @@
             this.connectPLC.UseVisualStyleBackColor = true;
             this.connectPLC.Click += new System.EventHandler(this.connectPLC_Click);
             // 
+            // Time
+            // 
+            this.Time.Location = new System.Drawing.Point(585, 28);
+            this.Time.Name = "Time";
+            this.Time.ReadOnly = true;
+            this.Time.Size = new System.Drawing.Size(126, 33);
+            this.Time.TabIndex = 90;
+            this.Time.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // recv_msg
+            // 
+            this.recv_msg.Location = new System.Drawing.Point(77, 470);
+            this.recv_msg.Name = "recv_msg";
+            this.recv_msg.ReadOnly = true;
+            this.recv_msg.Size = new System.Drawing.Size(684, 33);
+            this.recv_msg.TabIndex = 94;
+            this.recv_msg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label9
+            // 
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(11, 473);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(50, 25);
+            this.label9.TabIndex = 93;
+            this.label9.Text = "接收";
+            // 
+            // send_msg
+            // 
+            this.send_msg.Location = new System.Drawing.Point(77, 431);
+            this.send_msg.Name = "send_msg";
+            this.send_msg.ReadOnly = true;
+            this.send_msg.Size = new System.Drawing.Size(684, 33);
+            this.send_msg.TabIndex = 92;
+            this.send_msg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label8
+            // 
+            this.label8.AutoSize = true;
+            this.label8.Location = new System.Drawing.Point(11, 434);
+            this.label8.Name = "label8";
+            this.label8.Size = new System.Drawing.Size(50, 25);
+            this.label8.TabIndex = 91;
+            this.label8.Text = "发送";
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(797, 536);
+            this.ClientSize = new System.Drawing.Size(797, 617);
             this.Controls.Add(this.groupBox2);
             this.Controls.Add(this.groupBox1);
             this.Name = "Form1";
@@ -319,6 +374,11 @@
         private System.Windows.Forms.Button connectPLC;
         internal System.Windows.Forms.Label label7;
         private System.Windows.Forms.ComboBox bitValue;
+        private System.Windows.Forms.TextBox Time;
+        private System.Windows.Forms.TextBox recv_msg;
+        private System.Windows.Forms.Label label9;
+        private System.Windows.Forms.TextBox send_msg;
+        private System.Windows.Forms.Label label8;
 
     }
 }

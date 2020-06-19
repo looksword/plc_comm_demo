@@ -13,12 +13,14 @@ namespace FX_test
         public FX()
         {
             serialPort1 = new System.IO.Ports.SerialPort();
-            this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
+            //this.serialPort1.DataReceived += new System.IO.Ports.SerialDataReceivedEventHandler(this.serialPort1_DataReceived);
         }
 
         public System.IO.Ports.SerialPort serialPort1;
-        public List<byte> Data;
-        public bool writeOK;
+        public string send_string = "";
+        public string recv_string = "";
+        //public List<byte> Data;
+        //public bool writeOK;
 
         public bool connect(string com, Int16 BaudRate = 9600)
         {
@@ -67,71 +69,71 @@ namespace FX_test
 
         }
 
-        public void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
-        {
-            int length = serialPort1.BytesToRead;
-            byte[] data = new byte[length];
-            //int ae = 0;
-            try
-            {
-                if (length > 0)
-                {
-                    //byte[] data = new byte[length];
-                    serialPort1.Read(data, 0, length);
-                    serialPort1.DiscardInBuffer();
-                    //MessageBox.Show( BitConverter.ToString(data).Replace("-", " "));
-                    if (length > 2)
-                    {
-                        if(data[0]==0x02)
-                        {
-                            Data = new List<byte>();
-                            if(data[data.Length-3] == 0x03)
-                            {
-                                byte[] newdata = new byte[data.Length - 4];
-                                Array.Copy(data, 1, newdata, 0, newdata.Length);
-                                Data.AddRange(newdata);
-                            }
-                            else
-                            {
-                                byte[] newdata = new byte[data.Length - 1];
-                                Array.Copy(data, 1, newdata, 0, newdata.Length);
-                                Data.AddRange(newdata);
-                            }
-                        }
-                        else
-                        {
-                            if (data[data.Length - 3] == 0x03)
-                            {
-                                byte[] newdata = new byte[data.Length - 3];
-                                Array.Copy(data, 0, newdata, 0, newdata.Length);
-                                Data.AddRange(newdata);
-                            }
-                            else
-                            {
-                                byte[] newdata = new byte[data.Length];
-                                Array.Copy(data, 0, newdata, 0, newdata.Length);
-                                Data.AddRange(newdata);
-                            }
-                        }
-                    }
-                    if(length == 1)
-                    {
-                        if(data[0] == 0x06)
-                        {
-                            writeOK = true;
-                        }
-                        if(data[0] == 0x15)
-                        {
-                            writeOK = false;
-                        }
-                    }
-                }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-        }
+        //public void serialPort1_DataReceived(object sender, SerialDataReceivedEventArgs e)
+        //{
+        //    int length = serialPort1.BytesToRead;
+        //    byte[] data = new byte[length];
+        //    //int ae = 0;
+        //    try
+        //    {
+        //        if (length > 0)
+        //        {
+        //            //byte[] data = new byte[length];
+        //            serialPort1.Read(data, 0, length);
+        //            serialPort1.DiscardInBuffer();
+        //            //MessageBox.Show( BitConverter.ToString(data).Replace("-", " "));
+        //            if (length > 2)
+        //            {
+        //                if(data[0]==0x02)
+        //                {
+        //                    Data = new List<byte>();
+        //                    if(data[data.Length-3] == 0x03)
+        //                    {
+        //                        byte[] newdata = new byte[data.Length - 4];
+        //                        Array.Copy(data, 1, newdata, 0, newdata.Length);
+        //                        Data.AddRange(newdata);
+        //                    }
+        //                    else
+        //                    {
+        //                        byte[] newdata = new byte[data.Length - 1];
+        //                        Array.Copy(data, 1, newdata, 0, newdata.Length);
+        //                        Data.AddRange(newdata);
+        //                    }
+        //                }
+        //                else
+        //                {
+        //                    if (data[data.Length - 3] == 0x03)
+        //                    {
+        //                        byte[] newdata = new byte[data.Length - 3];
+        //                        Array.Copy(data, 0, newdata, 0, newdata.Length);
+        //                        Data.AddRange(newdata);
+        //                    }
+        //                    else
+        //                    {
+        //                        byte[] newdata = new byte[data.Length];
+        //                        Array.Copy(data, 0, newdata, 0, newdata.Length);
+        //                        Data.AddRange(newdata);
+        //                    }
+        //                }
+        //            }
+        //            if(length == 1)
+        //            {
+        //                if(data[0] == 0x06)
+        //                {
+        //                    writeOK = true;
+        //                }
+        //                if(data[0] == 0x15)
+        //                {
+        //                    writeOK = false;
+        //                }
+        //            }
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        MessageBox.Show(ex.Message);
+        //    }
+        //}
 
         public static byte[] GetAsciiBytes(params ushort[] numbers)
         {
@@ -155,7 +157,7 @@ namespace FX_test
 
         public byte[] read(Typ tp,int address,int count)
         {
-            this.Data = null;
+            //this.Data = null;
             byte[] data = new byte[11];
             data[0] = 0x02;
             data[1] = 0x30;//读出
@@ -235,29 +237,146 @@ namespace FX_test
 
             data[9] = (byte)sumStr[sumStr.Length - 2];
             data[10] = (byte)sumStr[sumStr.Length - 1];
-            try
-            {
 
-                if (this.serialPort1.IsOpen)
+            //try
+            //{
+
+            //    if (this.serialPort1.IsOpen)
+            //    {
+            //        Thread.Sleep(10);
+            //        serialPort1.Write(data, 0, data.Length);
+            //        //throw new Exception(BitConverter.ToString(data).Replace("-"," "));
+            //        //MessageBox.Show(BitConverter.ToString(data).Replace("-", " "));
+            //    }
+            //    else
+            //    {
+            //        //MessageBox.Show("端口尚未打开");
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    //MessageBox.Show(ex.Message);
+            //    throw new Exception(ex.Message);
+            //}
+            //int time = ((count / 6 + 1) / 2 + 1) * 100;
+            //Thread.Sleep(time);//数量增加，时间增加 6 100 18 200 30 300 42 400 54 500
+            //return this.Data.ToArray();
+            send_string = BitConverter.ToString(data).Replace("-", " ");//发送信息字符串
+            return readbase(data);
+        }
+
+        private byte[] readbase(byte[] send)
+        {
+            try
+            {//发送
+
+                if (serialPort1.IsOpen)
                 {
-                    Thread.Sleep(10);
-                    serialPort1.Write(data, 0, data.Length);
-                    //throw new Exception(BitConverter.ToString(data).Replace("-"," "));
+                    serialPort1.Write(send, 0, send.Length);
                     //MessageBox.Show(BitConverter.ToString(data).Replace("-", " "));
                 }
                 else
                 {
-                    //MessageBox.Show("端口尚未打开");
+                    throw new Exception("端口尚未打开");
                 }
             }
             catch (Exception ex)
             {
-                //MessageBox.Show(ex.Message);
-                throw new Exception(ex.Message);
+                throw ex;
             }
-            int time = ((count / 6 + 1) / 2 + 1) * 100;
-            Thread.Sleep(time);//数量增加，时间增加 6 100 18 200 30 300 42 400 54 500
-            return this.Data.ToArray();
+            byte[] data = null;//返回结果
+            try
+            {
+                byte[] buffer = new byte[512];
+                List<byte> instructionData = new List<byte>();
+                int count = 0;
+                int noDataTimes = 0;
+                int headerIndex = -1;//开头字符
+                int tailIndex = -1;//结束定界符
+                while (true)
+                {
+                    count = serialPort1.Read(buffer, 0, buffer.Length);
+                    if (noDataTimes > 16)
+                    {
+                        throw new Exception("Read resulted in 0 bytes returned.");
+                    }
+                    if (count == 0)
+                    {
+                        noDataTimes++;
+                        System.Threading.Thread.Sleep(10);
+                        continue;
+                    }
+                    else
+                    {
+                        noDataTimes = 0;
+                    }
+                    for (int i = 0; i < count; i++)
+                    {
+                        instructionData.Add(buffer[i]);
+                    }
+                    byte cmd = instructionData[0];
+                    if ((cmd == 0x06) || (cmd == 0x15))
+                    {//写入返回
+                        data = new byte[] { cmd };
+                        instructionData.RemoveAt(0);
+                        return data;
+                    }
+                    if (headerIndex < 0)
+                    {
+                        for (int i = 0; i < instructionData.Count; i++)
+                        {
+                            if (instructionData[i] == 0x02)
+                            {
+                                headerIndex = i;
+                                break;
+                            }
+                        }
+                        if (headerIndex < 0)
+                        {
+                            instructionData.Clear();
+                            continue;
+                        }
+                        if (headerIndex > 0)
+                        {
+                            instructionData.RemoveRange(0, headerIndex);
+                        }
+                    }
+                    if (tailIndex < 0)
+                    {
+                        for (int i = 0; i < instructionData.Count; i++)
+                        {
+                            if (instructionData[i] == 0x03)
+                            {
+                                tailIndex = i;
+                                break;
+                            }
+                        }
+                        if (tailIndex < 0)
+                        {
+                            if (instructionData.Count > 10240)
+                            {
+                                instructionData.Clear();
+                                headerIndex = -1;
+                            }
+                            continue;
+                        }
+                    }
+                    if (tailIndex + 2 + 1 <= instructionData.Count)
+                    {
+                        data = new byte[tailIndex - 1];
+                        for (int i = 1; i <= data.Length; i++)
+                        {
+                            data[i - 1] = instructionData[i];
+                        }
+                        recv_string = BitConverter.ToString(instructionData.ToArray()).Replace("-", " ");//接收信息字符串
+                        return data;
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+                throw ex;
+            }
         }
 
         public bool write(Typ tp, int address, int value)
@@ -301,28 +420,15 @@ namespace FX_test
             data[13] = (byte)sumStr[sumStr.Length - 2];
             data[14] = (byte)sumStr[sumStr.Length - 1];
 
-            try
+            byte[] result = readbase(data);
+            if(result[0]==0x06)
             {
-
-                if (this.serialPort1.IsOpen)
-                {
-                    Thread.Sleep(10);
-                    serialPort1.Write(data, 0, data.Length);
-                    //throw new Exception(BitConverter.ToString(data).Replace("-"," "));
-                    //MessageBox.Show(BitConverter.ToString(data).Replace("-", " "));
-                }
-                else
-                {
-                    //MessageBox.Show("端口尚未打开");
-                }
+                return true;
             }
-            catch (Exception ex)
+            else
             {
-                //MessageBox.Show(ex.Message);
-                throw new Exception(ex.Message);
+                return false;
             }
-            Thread.Sleep(200);
-            return this.writeOK;
         }
 
         public bool writeBool(Typ tp, int address, bool value)
@@ -374,28 +480,15 @@ namespace FX_test
             data[7] = (byte)sumStr[sumStr.Length - 2];
             data[8] = (byte)sumStr[sumStr.Length - 1];
 
-            try
+            byte[] result = readbase(data);
+            if (result[0] == 0x06)
             {
-
-                if (this.serialPort1.IsOpen)
-                {
-                    Thread.Sleep(10);
-                    serialPort1.Write(data, 0, data.Length);
-                    //throw new Exception(BitConverter.ToString(data).Replace("-"," "));
-                    //MessageBox.Show(BitConverter.ToString(data).Replace("-", " "));
-                }
-                else
-                {
-                    //MessageBox.Show("端口尚未打开");
-                }
+                return true;
             }
-            catch (Exception ex)
+            else
             {
-                //MessageBox.Show(ex.Message);
-                throw new Exception(ex.Message);
+                return false;
             }
-            Thread.Sleep(200);
-            return this.writeOK;
         }
 
         public enum Typ { D, M, X, Y};

@@ -73,6 +73,7 @@ namespace FX_test
         private void read_Click(object sender, EventArgs e)
         {
             return_value.Text = "";
+            int time = Environment.TickCount;
             try
             {
                 lock (this)
@@ -120,13 +121,17 @@ namespace FX_test
                             return_value.Text = outputstring;
                             break;
                     }
+                    send_msg.Text = FX_com.send_string;
+                    recv_msg.Text = FX_com.recv_string;
+                    time = Environment.TickCount - time;
+                    Time.Text = time.ToString() + " ms";
                 }
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
-            System.Threading.Thread.Sleep(200);
+            //System.Threading.Thread.Sleep(200);
         }
 
         public string data2string(byte[] data)
