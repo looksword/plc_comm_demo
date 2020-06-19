@@ -90,6 +90,7 @@
             // 
             this.recv_msg.Location = new System.Drawing.Point(96, 371);
             this.recv_msg.Name = "recv_msg";
+            this.recv_msg.ReadOnly = true;
             this.recv_msg.Size = new System.Drawing.Size(1342, 33);
             this.recv_msg.TabIndex = 21;
             this.recv_msg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -107,6 +108,7 @@
             // 
             this.send_msg.Location = new System.Drawing.Point(96, 332);
             this.send_msg.Name = "send_msg";
+            this.send_msg.ReadOnly = true;
             this.send_msg.Size = new System.Drawing.Size(1342, 33);
             this.send_msg.TabIndex = 19;
             this.send_msg.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
@@ -142,6 +144,7 @@
             this.return_value.Location = new System.Drawing.Point(96, 178);
             this.return_value.Multiline = true;
             this.return_value.Name = "return_value";
+            this.return_value.ReadOnly = true;
             this.return_value.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
             this.return_value.Size = new System.Drawing.Size(1342, 148);
             this.return_value.TabIndex = 15;
@@ -331,8 +334,9 @@
             // 
             // Time
             // 
-            this.Time.Location = new System.Drawing.Point(955, 71);
+            this.Time.Location = new System.Drawing.Point(813, 67);
             this.Time.Name = "Time";
+            this.Time.ReadOnly = true;
             this.Time.Size = new System.Drawing.Size(126, 21);
             this.Time.TabIndex = 8;
             this.Time.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
