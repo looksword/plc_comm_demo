@@ -1,0 +1,9 @@
+D:\Test\Keyence_test\Keyence_test\bin\Debug\Keyence_test.exe.config
+D:\Test\Keyence_test\Keyence_test\bin\Debug\Keyence_test.exe
+D:\Test\Keyence_test\Keyence_test\bin\Debug\Keyence_test.pdb
+D:\Test\Keyence_test\Keyence_test\obj\Debug\Keyence_test.csprojResolveAssemblyReference.cache
+D:\Test\Keyence_test\Keyence_test\obj\Debug\Keyence_test.Form1.resources
+D:\Test\Keyence_test\Keyence_test\obj\Debug\Keyence_test.Properties.Resources.resources
+D:\Test\Keyence_test\Keyence_test\obj\Debug\Keyence_test.csproj.GenerateResource.Cache
+D:\Test\Keyence_test\Keyence_test\obj\Debug\Keyence_test.exe
+D:\Test\Keyence_test\Keyence_test\obj\Debug\Keyence_test.pdb
