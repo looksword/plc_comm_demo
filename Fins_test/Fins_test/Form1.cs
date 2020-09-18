@@ -27,15 +27,14 @@ namespace Fins_test
                 comportName_plc.SelectedIndex = 0;
             }
             baudRate_plc.SelectedIndex = 0;
-            databits_plc.SelectedIndex = 1;
+            databits_plc.SelectedIndex = 0;
             stopbits_plc.DataSource = System.Enum.GetNames(typeof(Fins.IO.StopBits));
-            stopbits_plc.Text = StopBits.One.ToString();
+            stopbits_plc.Text = StopBits.Two.ToString();
             Parity_plc.DataSource = System.Enum.GetNames(typeof(Fins.IO.Parity));
-            Parity_plc.SelectedIndex = 0;
+            Parity_plc.SelectedIndex = 2;
 
             read_plc.Enabled = true;
-            write_plc.Enabled = false;
-            area_plc.Enabled = false;//暂不提供
+            write_plc.Enabled = true;
         }
 
         private void read_plc_Click(object sender, EventArgs e)
@@ -50,7 +49,7 @@ namespace Fins_test
                     area_plc.Enabled = false;
                     address_plc.Enabled = false;
                     length_plc.Enabled = false;
-                    value_plc.Enabled = false;
+                    //value_plc.Enabled = false;
                     startread = true;
                 }
                 else
@@ -80,10 +79,10 @@ namespace Fins_test
 
             read_plc.Text = "开始读取";
             timer1.Stop();
-            area_plc.Enabled = false;//暂不提供
+            area_plc.Enabled = true;
             address_plc.Enabled = true;
             length_plc.Enabled = true;
-            value_plc.Enabled = true;
+            //value_plc.Enabled = true;
             startread = false;
 
             if (fins == null)
@@ -98,12 +97,21 @@ namespace Fins_test
         {
             try
             {
+                timer1.Stop();
                 if ("SERIAL" == transport.SelectedTab.Text.ToUpper())
                 {
                     if (Fins == null) { }//Init Fins before GetLock to have lock to be used
                     lock (GlobalShareObjs.GetObj(comportName_plc.Text))
                     {
-                        Fins.WriteSingleRegister((byte)StationNumber, ushort.Parse(address_plc.Text), ushort.Parse(value_plc.Text));
+                        switch (area_plc.Text)
+                        {
+                            case "CIO":
+                                Fins.WriteSingleRegister((byte)StationNumber, ushort.Parse(address_plc.Text), ushort.Parse(value_plc.Text));
+                                break;
+                            default:
+                                Fins.WriteSingleRegister((byte)StationNumber, ushort.Parse(address_plc.Text), ushort.Parse(value_plc.Text));
+                                break;
+                        }
                     }
                 }
                 else
@@ -115,6 +123,15 @@ namespace Fins_test
             {
                 txt_plc.Text = "write error : " + ex.Message;
             }
+            finally
+            {
+                timer1.Start();
+            }
+        }
+
+        private ushort BoolToUShort(bool b)
+        {
+            return (ushort)(b ? 1 : 0);
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -127,7 +144,16 @@ namespace Fins_test
                     if (Fins == null) { }//Init Fins before GetLock to have lock to be used
                     lock (GlobalShareObjs.GetObj(comportName_plc.Text))
                     {
-                        data = Fins.ReadHoldingRegisters((byte)StationNumber, ushort.Parse(address_plc.Text), ushort.Parse(length_plc.Text));
+                        switch (area_plc.Text)
+                        {
+                            case "CIO":
+                                bool[] bdata = Fins.ReadCoils((byte)StationNumber, ushort.Parse(address_plc.Text), ushort.Parse(length_plc.Text));
+                                data = Array.ConvertAll(bdata, new Converter<bool, ushort>(BoolToUShort));
+                                break;
+                            default:
+                                data = Fins.ReadHoldingRegisters((byte)StationNumber, ushort.Parse(address_plc.Text), ushort.Parse(length_plc.Text));
+                                break;
+                        }
                     }
                 }
                 else

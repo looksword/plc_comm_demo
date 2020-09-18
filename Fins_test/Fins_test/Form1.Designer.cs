@@ -32,23 +32,23 @@
             this.timer1 = new System.Windows.Forms.Timer(this.components);
             this.transport = new System.Windows.Forms.TabControl();
             this.transport_tcp = new System.Windows.Forms.TabPage();
-            this.transport_serial = new System.Windows.Forms.TabPage();
-            this.read_plc = new System.Windows.Forms.Button();
-            this.write_plc = new System.Windows.Forms.Button();
-            this.Label1 = new System.Windows.Forms.Label();
-            this.TxtIP = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.TxtPort = new System.Windows.Forms.TextBox();
+            this.Label1 = new System.Windows.Forms.Label();
+            this.TxtIP = new System.Windows.Forms.TextBox();
+            this.transport_serial = new System.Windows.Forms.TabPage();
+            this.stopbits_plc = new System.Windows.Forms.ComboBox();
+            this.label6 = new System.Windows.Forms.Label();
+            this.databits_plc = new System.Windows.Forms.ComboBox();
+            this.label5 = new System.Windows.Forms.Label();
             this.Parity_plc = new System.Windows.Forms.ComboBox();
             this.label4 = new System.Windows.Forms.Label();
             this.baudRate_plc = new System.Windows.Forms.ComboBox();
             this.label7 = new System.Windows.Forms.Label();
             this.comportName_plc = new System.Windows.Forms.ComboBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.databits_plc = new System.Windows.Forms.ComboBox();
-            this.label5 = new System.Windows.Forms.Label();
-            this.stopbits_plc = new System.Windows.Forms.ComboBox();
-            this.label6 = new System.Windows.Forms.Label();
+            this.read_plc = new System.Windows.Forms.Button();
+            this.write_plc = new System.Windows.Forms.Button();
             this.value_plc = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.length_plc = new System.Windows.Forms.TextBox();
@@ -95,6 +95,40 @@
             this.transport_tcp.Text = "TCP";
             this.transport_tcp.UseVisualStyleBackColor = true;
             // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(178, 13);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(41, 12);
+            this.label2.TabIndex = 38;
+            this.label2.Text = "端口号";
+            // 
+            // TxtPort
+            // 
+            this.TxtPort.Location = new System.Drawing.Point(231, 9);
+            this.TxtPort.Name = "TxtPort";
+            this.TxtPort.Size = new System.Drawing.Size(50, 21);
+            this.TxtPort.TabIndex = 37;
+            this.TxtPort.Text = "9600";
+            // 
+            // Label1
+            // 
+            this.Label1.AutoSize = true;
+            this.Label1.Location = new System.Drawing.Point(7, 13);
+            this.Label1.Name = "Label1";
+            this.Label1.Size = new System.Drawing.Size(47, 12);
+            this.Label1.TabIndex = 36;
+            this.Label1.Text = "IP 地址";
+            // 
+            // TxtIP
+            // 
+            this.TxtIP.Location = new System.Drawing.Point(64, 9);
+            this.TxtIP.Name = "TxtIP";
+            this.TxtIP.Size = new System.Drawing.Size(100, 21);
+            this.TxtIP.TabIndex = 35;
+            this.TxtIP.Text = "192.168.1.233";
+            // 
             // transport_serial
             // 
             this.transport_serial.Controls.Add(this.stopbits_plc);
@@ -115,59 +149,50 @@
             this.transport_serial.Text = "SERIAL";
             this.transport_serial.UseVisualStyleBackColor = true;
             // 
-            // read_plc
+            // stopbits_plc
             // 
-            this.read_plc.Location = new System.Drawing.Point(751, 25);
-            this.read_plc.Name = "read_plc";
-            this.read_plc.Size = new System.Drawing.Size(120, 30);
-            this.read_plc.TabIndex = 1;
-            this.read_plc.Text = "开始读取";
-            this.read_plc.UseVisualStyleBackColor = true;
-            this.read_plc.Click += new System.EventHandler(this.read_plc_Click);
+            this.stopbits_plc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.stopbits_plc.FormattingEnabled = true;
+            this.stopbits_plc.Items.AddRange(new object[] {
+            "1",
+            "2",
+            "1.5"});
+            this.stopbits_plc.Location = new System.Drawing.Point(467, 9);
+            this.stopbits_plc.Name = "stopbits_plc";
+            this.stopbits_plc.Size = new System.Drawing.Size(82, 20);
+            this.stopbits_plc.TabIndex = 19;
             // 
-            // write_plc
+            // label6
             // 
-            this.write_plc.Location = new System.Drawing.Point(751, 68);
-            this.write_plc.Name = "write_plc";
-            this.write_plc.Size = new System.Drawing.Size(120, 30);
-            this.write_plc.TabIndex = 3;
-            this.write_plc.Text = "写入";
-            this.write_plc.UseVisualStyleBackColor = true;
-            this.write_plc.Click += new System.EventHandler(this.write_plc_Click);
+            this.label6.AutoSize = true;
+            this.label6.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label6.Location = new System.Drawing.Point(408, 9);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(65, 20);
+            this.label6.TabIndex = 18;
+            this.label6.Text = "停止位：";
             // 
-            // Label1
+            // databits_plc
             // 
-            this.Label1.AutoSize = true;
-            this.Label1.Location = new System.Drawing.Point(7, 13);
-            this.Label1.Name = "Label1";
-            this.Label1.Size = new System.Drawing.Size(47, 12);
-            this.Label1.TabIndex = 36;
-            this.Label1.Text = "IP 地址";
+            this.databits_plc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
+            this.databits_plc.FormattingEnabled = true;
+            this.databits_plc.Items.AddRange(new object[] {
+            "7",
+            "8"});
+            this.databits_plc.Location = new System.Drawing.Point(353, 9);
+            this.databits_plc.Name = "databits_plc";
+            this.databits_plc.Size = new System.Drawing.Size(50, 20);
+            this.databits_plc.TabIndex = 17;
             // 
-            // TxtIP
+            // label5
             // 
-            this.TxtIP.Location = new System.Drawing.Point(64, 9);
-            this.TxtIP.Name = "TxtIP";
-            this.TxtIP.Size = new System.Drawing.Size(100, 21);
-            this.TxtIP.TabIndex = 35;
-            this.TxtIP.Text = "192.168.1.233";
-            // 
-            // label2
-            // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(178, 13);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(41, 12);
-            this.label2.TabIndex = 38;
-            this.label2.Text = "端口号";
-            // 
-            // TxtPort
-            // 
-            this.TxtPort.Location = new System.Drawing.Point(231, 9);
-            this.TxtPort.Name = "TxtPort";
-            this.TxtPort.Size = new System.Drawing.Size(50, 21);
-            this.TxtPort.TabIndex = 37;
-            this.TxtPort.Text = "9600";
+            this.label5.AutoSize = true;
+            this.label5.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
+            this.label5.Location = new System.Drawing.Point(294, 9);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(65, 20);
+            this.label5.TabIndex = 16;
+            this.label5.Text = "数据位：";
             // 
             // Parity_plc
             // 
@@ -234,50 +259,25 @@
             this.label3.TabIndex = 10;
             this.label3.Text = "端口号：";
             // 
-            // databits_plc
+            // read_plc
             // 
-            this.databits_plc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.databits_plc.FormattingEnabled = true;
-            this.databits_plc.Items.AddRange(new object[] {
-            "7",
-            "8"});
-            this.databits_plc.Location = new System.Drawing.Point(353, 9);
-            this.databits_plc.Name = "databits_plc";
-            this.databits_plc.Size = new System.Drawing.Size(50, 20);
-            this.databits_plc.TabIndex = 17;
+            this.read_plc.Location = new System.Drawing.Point(751, 25);
+            this.read_plc.Name = "read_plc";
+            this.read_plc.Size = new System.Drawing.Size(120, 30);
+            this.read_plc.TabIndex = 1;
+            this.read_plc.Text = "开始读取";
+            this.read_plc.UseVisualStyleBackColor = true;
+            this.read_plc.Click += new System.EventHandler(this.read_plc_Click);
             // 
-            // label5
+            // write_plc
             // 
-            this.label5.AutoSize = true;
-            this.label5.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label5.Location = new System.Drawing.Point(294, 9);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(65, 20);
-            this.label5.TabIndex = 16;
-            this.label5.Text = "数据位：";
-            // 
-            // stopbits_plc
-            // 
-            this.stopbits_plc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
-            this.stopbits_plc.FormattingEnabled = true;
-            this.stopbits_plc.Items.AddRange(new object[] {
-            "1",
-            "2",
-            "1.5"});
-            this.stopbits_plc.Location = new System.Drawing.Point(467, 9);
-            this.stopbits_plc.Name = "stopbits_plc";
-            this.stopbits_plc.Size = new System.Drawing.Size(82, 20);
-            this.stopbits_plc.TabIndex = 19;
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Font = new System.Drawing.Font("微软雅黑", 10.5F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
-            this.label6.Location = new System.Drawing.Point(408, 9);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(65, 20);
-            this.label6.TabIndex = 18;
-            this.label6.Text = "停止位：";
+            this.write_plc.Location = new System.Drawing.Point(751, 68);
+            this.write_plc.Name = "write_plc";
+            this.write_plc.Size = new System.Drawing.Size(120, 30);
+            this.write_plc.TabIndex = 3;
+            this.write_plc.Text = "写入";
+            this.write_plc.UseVisualStyleBackColor = true;
+            this.write_plc.Click += new System.EventHandler(this.write_plc_Click);
             // 
             // value_plc
             // 
@@ -338,10 +338,8 @@
             this.area_plc.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.area_plc.FormattingEnabled = true;
             this.area_plc.Items.AddRange(new object[] {
-            "coil",
-            "input",
-            "Register",
-            "InputRegister"});
+            "DM",
+            "CIO"});
             this.area_plc.Location = new System.Drawing.Point(70, 75);
             this.area_plc.Name = "area_plc";
             this.area_plc.Size = new System.Drawing.Size(90, 20);
