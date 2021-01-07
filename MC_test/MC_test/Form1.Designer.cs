@@ -34,7 +34,6 @@
             this.TxtPort = new System.Windows.Forms.TextBox();
             this.label6 = new System.Windows.Forms.Label();
             this.TxtIP = new System.Windows.Forms.TextBox();
-            this.connectPLC_TCP = new System.Windows.Forms.Button();
             this.value_plc = new System.Windows.Forms.TextBox();
             this.label13 = new System.Windows.Forms.Label();
             this.write_plc = new System.Windows.Forms.Button();
@@ -57,7 +56,6 @@
             this.groupBox2.Controls.Add(this.TxtPort);
             this.groupBox2.Controls.Add(this.label6);
             this.groupBox2.Controls.Add(this.TxtIP);
-            this.groupBox2.Controls.Add(this.connectPLC_TCP);
             this.groupBox2.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox2.Font = new System.Drawing.Font("微软雅黑", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(134)));
             this.groupBox2.Location = new System.Drawing.Point(0, 0);
@@ -72,7 +70,7 @@
             this.ProtocolType.DropDownStyle = System.Windows.Forms.ComboBoxStyle.DropDownList;
             this.ProtocolType.FormattingEnabled = true;
             this.ProtocolType.Items.AddRange(new object[] {
-            "ASCii",
+            "ASCII",
             "BINARY"});
             this.ProtocolType.Location = new System.Drawing.Point(12, 28);
             this.ProtocolType.Name = "ProtocolType";
@@ -82,7 +80,7 @@
             // label5
             // 
             this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(334, 31);
+            this.label5.Location = new System.Drawing.Point(373, 31);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(42, 21);
             this.label5.TabIndex = 45;
@@ -90,11 +88,11 @@
             // 
             // TxtPort
             // 
-            this.TxtPort.Location = new System.Drawing.Point(379, 28);
+            this.TxtPort.Location = new System.Drawing.Point(418, 28);
             this.TxtPort.Name = "TxtPort";
-            this.TxtPort.Size = new System.Drawing.Size(53, 29);
+            this.TxtPort.Size = new System.Drawing.Size(54, 29);
             this.TxtPort.TabIndex = 43;
-            this.TxtPort.Text = "502";
+            this.TxtPort.Text = "9600";
             // 
             // label6
             // 
@@ -109,19 +107,9 @@
             // 
             this.TxtIP.Location = new System.Drawing.Point(192, 28);
             this.TxtIP.Name = "TxtIP";
-            this.TxtIP.Size = new System.Drawing.Size(139, 29);
+            this.TxtIP.Size = new System.Drawing.Size(175, 29);
             this.TxtIP.TabIndex = 42;
-            this.TxtIP.Text = "192.168.1.188";
-            // 
-            // connectPLC_TCP
-            // 
-            this.connectPLC_TCP.Location = new System.Drawing.Point(441, 26);
-            this.connectPLC_TCP.Name = "connectPLC_TCP";
-            this.connectPLC_TCP.Size = new System.Drawing.Size(228, 30);
-            this.connectPLC_TCP.TabIndex = 0;
-            this.connectPLC_TCP.Text = "连接";
-            this.connectPLC_TCP.UseVisualStyleBackColor = true;
-            this.connectPLC_TCP.Click += new System.EventHandler(this.connectPLC_TCP_Click);
+            this.TxtIP.Text = "192.168.2.105";
             // 
             // value_plc
             // 
@@ -280,7 +268,6 @@
         internal System.Windows.Forms.TextBox TxtPort;
         internal System.Windows.Forms.Label label6;
         internal System.Windows.Forms.TextBox TxtIP;
-        private System.Windows.Forms.Button connectPLC_TCP;
         internal System.Windows.Forms.TextBox value_plc;
         private System.Windows.Forms.Label label13;
         private System.Windows.Forms.Button write_plc;

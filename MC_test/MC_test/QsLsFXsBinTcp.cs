@@ -152,7 +152,7 @@ namespace MC_test
 
         private byte[] BuildWriteBitCmd(string devType, int firstDevIndex, short iStep, short[] iWData)
         {
-            string ins = "50-00-00-FF-FF-03-00-" + (12 + ((iStep - 1) / 2 + 1)).ToString("X") + this.GetMonitorTime() + CmdW + "01-00-" +
+            string ins = "50-00-00-FF-FF-03-00-" + this.GetiDataLength(iStep) + this.GetMonitorTime() + CmdW + "01-00-" +
                 this.GetStartDevice(devType, firstDevIndex) +
                 BitConverter.ToString(BitConverter.GetBytes(iStep)) + this.GetWriteBitData(iWData);
             string[] strArray = (ins).Split(new char[] { '-' });
@@ -180,6 +180,20 @@ namespace MC_test
         private string GetDataLength(short iStep)
         {
             string str = (12 + (iStep * 2)).ToString("X");
+            if (str.Length < 4)
+            {
+                int num = 4 - str.Length;
+                for (int i = 0; i < num; i++)
+                {
+                    str = "0" + str;
+                }
+            }
+            return (str.Substring(2, 2) + "-" + str.Substring(0, 2) + "-");
+        }
+
+        private string GetiDataLength(short iStep)
+        {
+            string str = (12 + ((iStep - 1) / 2 + 1)).ToString("X");
             if (str.Length < 4)
             {
                 int num = 4 - str.Length;
@@ -340,7 +354,7 @@ namespace MC_test
                     {
                         buffer = this.BuildReadCmd(devType, firstDevIndex, (short)deviceCount);
                         this.socket.Send(buffer);
-                        buffer = new byte[(deviceCount * 2) + 11];
+                        buffer = new byte[(GetRWRange(devType, (short)deviceCount) * 2) + 11];//字位考虑
                         insLen = 0;
                         while (true)//for (int i = 0; i < 8; i++)
                         {
@@ -355,7 +369,7 @@ namespace MC_test
                         {
                             break;
                         }
-                        for (num4 = 0; num4 < deviceCount; num4++)
+                        for (num4 = 0; num4 < GetRWRange(devType, (short)deviceCount); num4++)//for (num4 = 0; num4 < deviceCount; num4++)
                         {
                             string str2 = Convert.ToString(buffer[(num4 * 2) + 11], 2).PadLeft(8, '0');
                             string str3 = Convert.ToString(buffer[(num4 * 2) + 12], 2).PadLeft(8, '0');
@@ -383,7 +397,7 @@ namespace MC_test
 
                 return 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return -9999;
             }
@@ -391,7 +405,7 @@ namespace MC_test
 
         public int WriteDeviceBlock(string devType, int firstDevIndex, int deviceCount, short[] data)
         {
-            if (deviceCount >= data.Length)
+            if (deviceCount > data.Length)
             {
                 throw new Exception("Length of data is shorter than the length we want to access.");
             }
@@ -447,9 +461,10 @@ namespace MC_test
                         {
                             buffer = this.BuildWriteCmd(devType, firstDevIndex, (short)deviceCount, numArray);
                         }
-                        this.socket.Send(buffer);
+                        int sendnum = this.socket.Send(buffer);
                         buffer = new byte[20];
-                        if (this.socket.Receive(buffer) != 11)
+                        int recvnum = this.socket.Receive(buffer);
+                        if (recvnum != 11)
                         {
                         }
                     }
@@ -457,7 +472,7 @@ namespace MC_test
                 while (deviceCount > 0x162);
                 return 0;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
                 return -9999;
             }

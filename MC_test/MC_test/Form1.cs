@@ -17,57 +17,47 @@ namespace MC_test
             InitializeComponent();
             ProtocolType.SelectedIndex = 0;
             area_plc.SelectedIndex = 0;
-            connectPLC_TCP.Enabled = true;
-            read_plc.Enabled = false;
-            write_plc.Enabled = false;
         }
 
-        private IMelsecMaster Melsec = null;
+        private IMelsecMaster melsec = null;
 
-        private void connectPLC_TCP_Click(object sender, EventArgs e)
+        private IMelsecMaster Melsec
         {
-            try
+            get
             {
-                if (Melsec == null)
+                if (melsec != null) return melsec;
+                switch (ProtocolType.Text)
                 {
-                    switch (ProtocolType.Text)
-                    {
-                        case "ASCII":
-                            QsLsFXsAscTcp at = new QsLsFXsAscTcp();
-                            at.ActHostAddress = TxtIP.Text;
-                            at.ActPortNumber = int.Parse(TxtPort.Text);
-                            at.Open();
-                            Melsec = at;
-                            break;
-                        case "BINARY":
-                            QsLsFXsBinTcp bt = new QsLsFXsBinTcp();
-                            bt.ActHostAddress = TxtIP.Text;
-                            bt.ActPortNumber = int.Parse(TxtPort.Text);
-                            bt.Open();//
-                            Melsec = bt;
-                            break;
-                    }
-                    connectPLC_TCP.Text = "断开";
-                    connectPLC_TCP.Enabled = false;
-                    read_plc.Enabled = true;
-                    write_plc.Enabled = true;
+                    case "ASCII":
+                        QsLsFXsAscTcp at = new QsLsFXsAscTcp();
+                        at.ActHostAddress = TxtIP.Text;
+                        at.ActPortNumber = int.Parse(TxtPort.Text);
+                        at.Open();
+                        melsec = at;
+                        break;
+                    case "BINARY":
+                        QsLsFXsBinTcp bt = new QsLsFXsBinTcp();
+                        bt.ActHostAddress = TxtIP.Text;
+                        bt.ActPortNumber = int.Parse(TxtPort.Text);
+                        bt.Open();//
+                        melsec = bt;
+                        break;
+                    default:
+                        break;
                 }
-                else
-                {
-                    Melsec = null;
-                    connectPLC_TCP.Text = "连接";
-                    connectPLC_TCP.Enabled = true;
-                    read_plc.Enabled = false;
-                    write_plc.Enabled = false;
-                }
+
+                return melsec;
             }
-            catch(Exception ex)
+        }
+
+        public void Disconnect()
+        {
+            if (melsec == null)
             {
-                txt_plc.Text = "连接错误 ： " + ex.Message;
-                connectPLC_TCP.Enabled = true;
-                read_plc.Enabled = false;
-                write_plc.Enabled = false;
+                return;
             }
+            try { using (melsec) { } }
+            finally { melsec = null; }
         }
 
         private byte ShortToByte(short s)
@@ -79,21 +69,15 @@ namespace MC_test
         {
             try
             {
-                if (Melsec != null)
-                {
-                    short[] data = null;
-                    Melsec.ReadDeviceBlock(area_plc.Text, int.Parse(address_plc.Text), int.Parse(length_plc.Text), out data);
-                    byte[] bytedata = Array.ConvertAll(data, new Converter<short, byte>(ShortToByte));
-                    data_plc.Text = BitConverter.ToString(bytedata).Replace("-", " "); ;
-                }
-                else
-                {
-                    throw new Exception("Melsec不存在");
-                }
+                short[] data = null;
+                Melsec.ReadDeviceBlock(area_plc.Text, int.Parse(address_plc.Text), int.Parse(length_plc.Text), out data);
+                byte[] bytedata = Array.ConvertAll(data, new Converter<short, byte>(ShortToByte));
+                data_plc.Text = BitConverter.ToString(bytedata).Replace("-", " "); ;
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
-                txt_plc.Text = "读取错误 ： " + ex.Message;
+                Disconnect();
+                txt_plc.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss.fff") + ": " + "读取错误 ： " + ex.Message;
             }
         }
 
@@ -101,25 +85,19 @@ namespace MC_test
         {
             try
             {
-                if (Melsec != null)
+                short[] data = new short[1];
+                data[0] = short.Parse(value_plc.Text);
+                int value = 1;
+                value = Melsec.WriteDeviceBlock(area_plc.Text, int.Parse(address_plc.Text), data.Length, data);
+                if (value != 0)
                 {
-                    short[] data = new short[1];
-                    data[0] = short.Parse(value_plc.Text);
-                    int value = 1;
-                    value = Melsec.WriteDeviceBlock(area_plc.Text, int.Parse(address_plc.Text), data.Length, data);
-                    if (value != 0)
-                    {
-                        throw new Exception("area:" + area_plc.Text + " address:" + address_plc.Text + " value:" + value_plc.Text);
-                    }
-                }
-                else
-                {
-                    throw new Exception("Melsec不存在");
+                    throw new Exception("area:" + area_plc.Text + " address:" + address_plc.Text + " value:" + value_plc.Text);
                 }
             }
             catch (Exception ex)
             {
-                txt_plc.Text = "写入错误 ： " + ex.Message;
+                Disconnect();
+                txt_plc.Text = DateTime.Now.ToString("yyyyMMdd HH:mm:ss.fff") + ": " + "写入错误 ： " + ex.Message;
             }
         }
     }
