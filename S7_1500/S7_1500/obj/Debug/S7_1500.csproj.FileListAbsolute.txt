@@ -7,3 +7,12 @@ D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.csproj.GenerateResource.
 D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.exe
 D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.pdb
 D:\化工智能工厂\S7_1500\S7_1500\obj\Debug\S7_1500.csprojResolveAssemblyReference.cache
+E:\PLC\git\plc_comm_demo\S7_1500\S7_1500\bin\Debug\S7_1500.exe.config
+E:\PLC\git\plc_comm_demo\S7_1500\S7_1500\obj\Debug\S7_1500.exe
+E:\PLC\git\plc_comm_demo\S7_1500\S7_1500\obj\Debug\S7_1500.pdb
+E:\PLC\git\plc_comm_demo\S7_1500\S7_1500\bin\Debug\S7_1500.exe
+E:\PLC\git\plc_comm_demo\S7_1500\S7_1500\bin\Debug\S7_1500.pdb
+E:\PLC\git\plc_comm_demo\S7_1500\S7_1500\obj\Debug\S7_1500.csprojResolveAssemblyReference.cache
+E:\PLC\git\plc_comm_demo\S7_1500\S7_1500\obj\Debug\S7_1500.S7_1500_Form.resources
+E:\PLC\git\plc_comm_demo\S7_1500\S7_1500\obj\Debug\S7_1500.Properties.Resources.resources
+E:\PLC\git\plc_comm_demo\S7_1500\S7_1500\obj\Debug\S7_1500.csproj.GenerateResource.Cache

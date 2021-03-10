@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
@@ -142,10 +143,26 @@ namespace S7_1500
                 {
                     bitStart = int.Parse(Offset.Text.Split('.')[1] == "" ? "0" : Offset.Text.Split('.')[1]);
                 }
-                Result = Client.ReadArea(Area[CBArea.SelectedIndex], DBNumber, byteStart, 1, S7Consts.S7WLByte, data, ref SizeRead);
-                S7.SetBitAt(ref data, 0, bitStart, boolValue);
-                Result = Client.WriteArea(Area[CBArea.SelectedIndex], DBNumber, byteStart, 1, S7Consts.S7WLByte, data, ref SizeWrite);
+                //Result = Client.ReadArea(Area[CBArea.SelectedIndex], DBNumber, byteStart, 1, S7Consts.S7WLByte, data, ref SizeRead);//先读字节
+                //S7.SetBitAt(ref data, 0, bitStart, boolValue);
+                //Result = Client.WriteArea(Area[CBArea.SelectedIndex], DBNumber, byteStart, 1, S7Consts.S7WLByte, data, ref SizeWrite);//再写位
+                if(boolValue)
+                {
+                    data[0] = 1;
+                }
+                Result = Client.WriteArea(Area[CBArea.SelectedIndex], DBNumber, byteStart * 8 + bitStart, 1, S7Consts.S7WLBit, data, ref SizeWrite);//推荐这样写位
                 ShowResult(Result);
+            }
+            if(WordLen[CBWLen.SelectedIndex] == S7Consts.S7WLByte)
+            {
+                int DBNumber = System.Convert.ToInt32(TxtDB.Text);
+                int bias_num;
+                int SizeWrite = 0;//写进去的字节数
+                int Result;
+                bias_num = int.Parse(Offset.Text.Split('.')[0] == "" ? "0" : Offset.Text.Split('.')[0]);
+                byte[] data = new byte[1];
+                data[0] = byte.Parse(TxtToWrite.Text);
+                Result = Client.WriteArea(Area[CBArea.SelectedIndex], DBNumber, bias_num, 1, S7Consts.S7WLByte, data, ref SizeWrite);
             }
         }
 
@@ -264,6 +281,17 @@ namespace S7_1500
                     result.Append(line);
                 }
                 DumpBox.Text = result.ToString();
+            }
+
+            string fp = System.Windows.Forms.Application.StartupPath + "\\S7 1500.json";
+            if (!File.Exists(fp)) // 判断是否已有相同文件 
+            {
+                FileStream fs1 = new FileStream(fp, FileMode.Create, FileAccess.ReadWrite);//创建文件
+                fs1.Close();
+            }
+            using (StreamWriter sw = new StreamWriter(fp, true))
+            {
+                sw.WriteLine(DumpBox.Text);
             }
         }
     }
