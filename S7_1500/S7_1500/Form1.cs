@@ -164,6 +164,17 @@ namespace S7_1500
                 data[0] = byte.Parse(TxtToWrite.Text);
                 Result = Client.WriteArea(Area[CBArea.SelectedIndex], DBNumber, bias_num, 1, S7Consts.S7WLByte, data, ref SizeWrite);
             }
+            if(WordLen[CBWLen.SelectedIndex] == S7Consts.S7WLInt)
+            {
+                int DBNumber = System.Convert.ToInt32(TxtDB.Text);
+                int bias_num;
+                int SizeWrite = 0;//写进去的字节数
+                int Result;
+                bias_num = int.Parse(Offset.Text.Split('.')[0] == "" ? "0" : Offset.Text.Split('.')[0]);
+                byte[] data = new byte[2];
+                S7.SetIntAt(data, 0, short.Parse(TxtToWrite.Text));
+                Result = Client.WriteArea(Area[CBArea.SelectedIndex], DBNumber, bias_num, 1, S7Consts.S7WLInt, data, ref SizeWrite);
+            }
         }
 
         private int[] Area = 
