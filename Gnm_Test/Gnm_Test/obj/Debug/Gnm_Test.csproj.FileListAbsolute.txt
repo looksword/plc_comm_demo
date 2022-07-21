@@ -1,0 +1,14 @@
+D:\Test\Gnm_Test\Gnm_Test\bin\Debug\Gnm_Test.exe.config
+D:\Test\Gnm_Test\Gnm_Test\obj\Debug\Gnm_Test.csprojResolveAssemblyReference.cache
+D:\Test\Gnm_Test\Gnm_Test\obj\Debug\Gnm_Test.Form1.resources
+D:\Test\Gnm_Test\Gnm_Test\obj\Debug\Gnm_Test.Properties.Resources.resources
+D:\Test\Gnm_Test\Gnm_Test\obj\Debug\Gnm_Test.csproj.GenerateResource.Cache
+D:\Test\Gnm_Test\Gnm_Test\bin\Debug\Gnm_Test.exe
+D:\Test\Gnm_Test\Gnm_Test\bin\Debug\Gnm_Test.pdb
+D:\Test\Gnm_Test\Gnm_Test\bin\Debug\Gnm.dll
+D:\Test\Gnm_Test\Gnm_Test\bin\Debug\Gnm.pdb
+D:\Test\Gnm_Test\Gnm_Test\obj\Debug\Gnm_Test.exe
+D:\Test\Gnm_Test\Gnm_Test\obj\Debug\Gnm_Test.pdb
+D:\Test\Gnm_Test\Debug\Gnm_Test.exe.config
+D:\Test\Gnm_Test\Debug\Gnm_Test.exe
+D:\Test\Gnm_Test\Debug\Gnm_Test.pdb

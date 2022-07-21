@@ -1,0 +1,6 @@
+D:\Test\Gnm_Test\Gnm\obj\Debug\Gnm.Resources.resources
+D:\Test\Gnm_Test\Gnm\obj\Debug\Gnm.csproj.GenerateResource.Cache
+D:\Test\Gnm_Test\Debug\Gnm.dll
+D:\Test\Gnm_Test\Debug\Gnm.pdb
+D:\Test\Gnm_Test\Gnm\obj\Debug\Gnm.dll
+D:\Test\Gnm_Test\Gnm\obj\Debug\Gnm.pdb
