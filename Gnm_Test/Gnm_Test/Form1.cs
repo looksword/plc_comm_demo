@@ -24,7 +24,7 @@ namespace Gnm_Test
         {
             InitializeComponent();
             ReadBtn.Enabled = false;
-            ReadFBtn.Enabled = false;
+            ReadbitBtn.Enabled = false;
             DisconnectBtn.Enabled = false;
             text_type.SelectedIndex = 0;
         }
@@ -40,7 +40,7 @@ namespace Gnm_Test
                     if ((GNM != null) && (GNM.Transport != null))
                     {
                         ReadBtn.Enabled = true;
-                        ReadFBtn.Enabled = true;
+                        ReadbitBtn.Enabled = true;
                         DisconnectBtn.Enabled = true;
                         ConnectBtn.Enabled = false;
                         connected = true;
@@ -65,7 +65,7 @@ namespace Gnm_Test
                         finally { GNM = null; }
                     }
                     ReadBtn.Enabled = false;
-                    ReadFBtn.Enabled = false;
+                    ReadbitBtn.Enabled = false;
                     DisconnectBtn.Enabled = false;
                     ConnectBtn.Enabled = true;
                     connected = false;
@@ -81,6 +81,7 @@ namespace Gnm_Test
         {
             try
             {
+                int Elapsed = Environment.TickCount;
                 UInt32[] data = null;
                 string addrtype = text_type.Text;
                 ushort addrStart = ushort.Parse(text_addr.Text.Trim());
@@ -100,6 +101,56 @@ namespace Gnm_Test
                             data = Array.ConvertAll(bData, new Converter<bool, UInt32>(BoolToUInt32));
                             break;
                         }
+                    default:
+                        {
+                            break;
+                        }
+                }
+                int Time_ms = Environment.TickCount - Elapsed;
+                if (data != null)
+                {
+                    for (int i = 0; i < SizeRead; i++)
+                    {
+                        outputstr.Append(data[i].ToString());
+                        outputstr.Append(" ");
+                    }
+                    text_data.Text = outputstr.ToString();
+
+                    
+                    text_err.Text = "(" + Time_ms.ToString() + " ms)";
+                }
+                else
+                {
+                    text_data.Clear();
+                    text_err.Text = "Failed to read (" + Time_ms.ToString() + " ms)";
+                }
+            }
+            catch (Exception ex)
+            {
+                text_data.Clear();
+                text_err.Text = ex.Message;
+                DisconnectBtn_Click(null, null);
+            }
+        }
+
+        private void ReadbitBtn_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                int Elapsed = Environment.TickCount;
+                UInt32[] data = null;
+                string addrtype = text_type.Text;
+                ushort addrStart = ushort.Parse(text_addr.Text.Trim());
+                ushort SizeRead = ushort.Parse(text_num.Text.Trim());
+                StringBuilder outputstr = new StringBuilder();
+                switch (addrtype)
+                {
+                    case "M":
+                        {
+                            bool[] bData = GNM.ReadCoils(0x01, addrStart, SizeRead);
+                            data = Array.ConvertAll(bData, new Converter<bool, UInt32>(BoolToUInt32));
+                            break;
+                        }
                     case "X":
                         {
                             bool[] bData = GNM.ReadXareas(0x01, addrStart, SizeRead);//ReadXarea
@@ -112,17 +163,33 @@ namespace Gnm_Test
                             data = Array.ConvertAll(bData, new Converter<bool, UInt32>(BoolToUInt32));
                             break;
                         }
-                } 
-
-                for (int i = 0; i < SizeRead; i++)
-                {
-                    outputstr.Append(data[i].ToString());
-                    outputstr.Append(" ");
+                    default:
+                        {
+                            break;
+                        }
                 }
-                text_data.Text = outputstr.ToString();
+                int Time_ms = Environment.TickCount - Elapsed;
+                if (data != null)
+                {
+                    for (int i = 0; i < SizeRead; i++)
+                    {
+                        outputstr.Append(data[i].ToString());
+                        outputstr.Append(" ");
+                    }
+                    text_data.Text = outputstr.ToString();
+
+
+                    text_err.Text = "(" + Time_ms.ToString() + " ms)";
+                }
+                else
+                {
+                    text_data.Clear();
+                    text_err.Text = "Failed to read (" + Time_ms.ToString() + " ms)";
+                }
             }
             catch (Exception ex)
             {
+                text_data.Clear();
                 text_err.Text = ex.Message;
                 DisconnectBtn_Click(null, null);
             }
